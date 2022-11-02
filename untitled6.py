@@ -7,7 +7,7 @@ top5 =CO2_df2020.sort_values(by=['value'],ascending = False).head(5)
 fig = px.bar(top5.sort_values(by=['value']), x= 'Country Name', y = 'value', 
     labels={'value':'CO2 emissions (kt)'}, title = 'CO2 emissions (kt) - Top 5 nations in Year 2016')
 fig.update_xaxes(fixedrange=True)
-
+#the dashing board
 import dash
 import dash_core_components as dcc
 import dash_html_components as html
