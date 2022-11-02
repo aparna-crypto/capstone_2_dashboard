@@ -7,15 +7,7 @@ Original file is located at
     https://colab.research.google.com/drive/16fsT7P00rWT8nnOxtOHQvR_QkQQvxJLJ
 """
 
-import pandas as pd
-dashboardurl='https://github.com/Chugh-Kanika/ISE-198-Dashboard-tutorial-using-Dash-Python-/blob/main/Wdi%20data%20for%20dashboard.xlsx?raw=true'
-df_dash=pd.read_excel(dashboardurl, na_values='..')
-df_dash.shape
-df_newdash=df_dash.drop(['Country Code',  'Series Code'],axis = 1)
-df_nonagg=df_newdash[-df_newdash['Country Name'].isin(agg)]
-df_flat = df_nonagg.melt(id_vars=["Country Name", "Series Name"], var_name="Year", value_name="value")
-df_flat[['Year','NA']] = df_flat.Year.str.split(" ", expand=True) 
-df_flat=df_flat.dropna(axis=0, subset = ['Country Name'])
+
 
 import plotly.express as px
 CO2_df = df_flat.loc[df_flat['Series Name'] =='CO2 emissions (kt)']
