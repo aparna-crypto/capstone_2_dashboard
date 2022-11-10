@@ -103,13 +103,15 @@ elif viz_opt == "One country":
             st.header(f"Visualizing **LAND** temperature anomalies for **{country}**")
             fig = plot_onec(parsed_data, low, high) # creating figure
 
-             # creating display sections for better visualization. The syntax means the "portions" of the page width each col takes.
+            # creating display sections for better visualization. The syntax means the "portions" of the page width each col takes.
             col1, col2 = st.columns([5,1])
-
-            with col1: # plot section
+            
+            # plot section
+            with col1:
                 st.plotly_chart(fig, use_container_width = True) # instantiating figure and sizing to container
 
-            with col2: # small tables section
+            # small tables section
+            with col2: 
                 st.write("Year of **max** temperature anomaly")
                 if isinstance(parsed_data.loc[idxmax]["Temperature Anomaly"], np.float64) == True:
                     st.table(pd.DataFrame({parsed_data.loc[idxmax]["Year"]:parsed_data.loc[idxmax]["Temperature Anomaly"]}, index = ["Temp. Anomaly"]))
