@@ -306,5 +306,4 @@ def plot_chart(country_data, low = 1961, high = 2019):
     plt.axhline(country_data["Temperature Anomaly"].min(), linestyle = "--", color = "blue", linewidth = 1)
 
     return fig
-
 '''
