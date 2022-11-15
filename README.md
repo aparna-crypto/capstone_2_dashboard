@@ -1,3 +1,4 @@
+# Capstone-II
 # capstone_2_dashboard
 
 This project is made for capstone2 project. It is a dashboard show-casing climate change.
@@ -13,7 +14,3 @@ Technologies Used:
 8. requests library - for handing requests
 
 We aspire to produce a interactive Dashboard webapp which can show insightful graphs on realtime climate changes.
-
-sdfssgfdhgdgfhgfhj
-djkkfhjkhfkjdshfjkdh
-jkhkjhlhjk
