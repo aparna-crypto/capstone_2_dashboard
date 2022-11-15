@@ -14,7 +14,3 @@ Technologies Used:
 
 
 We aspire to produce a interactive Dashboard webapp which can show insightful graphs on realtime climate changes.
-<<<<<<< HEAD
-=======
-
->>>>>>> 9eedc088aa84156395635712df6a647a6547cb97
