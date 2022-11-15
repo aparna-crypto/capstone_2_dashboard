@@ -7,7 +7,7 @@ top5 =CO2_df2020.sort_values(by=['value'],ascending = False).head(5)
 fig = px.bar(top5.sort_values(by=['value']), x= 'Country Name', y = 'value', 
     labels={'value':'CO2 emissions (kt)'}, title = 'CO2 emissions (kt) - Top 5 nations in Year 2016')
 fig.update_xaxes(fixedrange=True)
-
+#the dashing board
 import dash
 import dash_core_components as dcc
 import dash_html_components as html
@@ -64,7 +64,7 @@ df_flat = pd.read_csv('Dashboard_file preprocessed df.csv')
 available_country = df_flat['Country Name'].unique()
 
 #Below code defines the layout of the dashboard. It defines how the dashboard will appear as a web page.
-#For this dashboard, there are two dropdowns to select two countries for comparison and two time series chart for the
+#For this dashboard, there are two sussybaaka dropdowns to select two countries for comparison and two time series chart for the
 #pre-defined parameter which get updated based on the country selected.
 
 #Dash Core Component - Dropdown and Graph is being used where Time-series graph will update based on country selected

@@ -8,9 +8,13 @@ Technologies Used:
 2. Plotly
 3. Pandas
 4. Numpy
-5. Jupyter Notebbok
-6. Lottiefiles - for animated figures
-7. Pillow - for showcasing images
-8. requests library - for handing requests
+5. Seaborn
+6. Scipy
+7. Matplotlib
+
 
 We aspire to produce a interactive Dashboard webapp which can show insightful graphs on realtime climate changes.
+<<<<<<< HEAD
+=======
+
+>>>>>>> 9eedc088aa84156395635712df6a647a6547cb97
