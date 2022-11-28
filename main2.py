@@ -141,7 +141,7 @@ elif viz_opt == "One country":
             #st.markdown(href, unsafe_allow_html=True)
 
 
-elif viz_opt == "Next":
+elif viz_opt == "CO2 Emmissions":
     st.title("CO2 Emmissions")
     @st.cache
     def get_data(url):
