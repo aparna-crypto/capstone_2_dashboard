@@ -14,7 +14,8 @@ Technologies Used:
 
 
 We aspire to produce a interactive Dashboard webapp which can show insightful graphs on realtime climate changes.
-<<<<<<< HEAD
-=======
 
->>>>>>> 9eedc088aa84156395635712df6a647a6547cb97
+
+Our dashboard aims to drive conversation towards climate change, highlight its consequences and actively prevent it. We've used certain indicators like temperature, humidity, etc, of climate conditions and by monitoring and analyzing them we've obtained a difference or rate of change. Using that information, we've identified the factors that contribute to the change. Finally, we have brought  and implemented correct measures that help in reducing the effects of climate change for the better. 
+
+Apart from the global phenomenon that is climate change, identifying changes in the climate will help us with our daily operations. For instance, it can give insights to farmers on what crops to grow next.
