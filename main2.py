@@ -1,6 +1,10 @@
 import base64
 import pandas as pd
 from Climatevizv2 import *
+import plotly.express as px
+import pandas as pd
+import numpy as np
+
 
 st.set_page_config(layout="wide")
 
@@ -11,7 +15,7 @@ data = load_data("data/Environment_Temperature_change_E_All_Data_NOFLAG.csv")
 st.sidebar.title("Display options")
 
 #Selecting visualization paths
-viz_opt = st.sidebar.selectbox(label="Select what you wish to see!", options=["None","One country", "Multiple countries"])
+viz_opt = st.sidebar.selectbox(label="Select what you wish to see!", options=["None","One country", "Multiple countries", "CO2 Emmissions"])
 
 if viz_opt == "Multiple countries":
     countries = st.sidebar.multiselect("Select countries to visualize (Max 3 recommended)", data["area"].unique()) # displaying list of available countries , default option is an empty list for flow control
@@ -135,7 +139,85 @@ elif viz_opt == "One country":
             #b64 = base64.b64encode(csv.encode()).decode()  # some strings <-> bytes conversions necessary here
             #href = f'<a href="data:file/csv;base64,{b64}">Download CSV File</a> (***IMPORTANT***: right-click and save as <your_name>.csv)'
             #st.markdown(href, unsafe_allow_html=True)
-            
+
+
+elif viz_opt == "Next":
+    st.title("CO2 Emmissions")
+    @st.cache
+    def get_data(url):
+        return pd.read_csv(url)
+    @st.cache
+    def get_co2_data(): 
+        # OWID Data on CO2 and Greenhouse Gas Emissions
+        # Creative Commons BY license
+        url = 'https://github.com/owid/co2-data/raw/master/owid-co2-data.csv'
+        return get_data(url)
+
+    df_co2= get_co2_data()
+
+    st.markdown("""
+    # World CO2 emissions
+    __The graphs below show the CO2 emissions per capita for the entire 
+    world and individual countries over time.
+    Select a year with the slider in the left-hand graph and countries 
+    from the drop down menu in the other one.__
+    __Scroll down to see charts demonstrating the correlation between 
+    the level of CO2 and global warming.__
+    __Hover over any of the charts to see more detail__
+    ---
+    """)
+
+    col2, space2, col3 = st.columns((10,1,10))
+
+    with col2:
+        year = st.slider('Select year',1750,2020)
+        fig = px.choropleth(df_co2[df_co2['year']==year], locations="iso_code",
+                            color="co2_per_capita",
+                            hover_name="country",
+                            range_color=(0,25),
+                            color_continuous_scale=px.colors.sequential.Reds)
+        st.plotly_chart(fig, use_container_width=True)
+
+    with col3: 
+        default_countries = ['World','United States','United Kingdom','EU-27','China', 'Australia']
+        countries = df_co2['country'].unique()
+
+        selected_countries = st.multiselect('Select country or group',countries,default_countries)
+
+        df3 = df_co2.query('country in @selected_countries' )
+
+        fig2 = px.line(df3,"year","co2_per_capita",color="country")
+
+        st.plotly_chart(fig2, use_container_width=True)
+
+        
+    # st.dataframe(get_warming_data())
+
+    col4, space3, col5,space4,col6 = st.columns((10,1,10,1,10))
+    with col4:
+        st.markdown("""
+        ## Corelation between CO2 emission and global warming
+        This can be seen in the adjacent graphs. 
+        
+        The first show temperature
+        has changed since 1850 and you can see that temperatures begin 
+        to rise after the beginning of the twentieth century but there 
+        is a sharp upturn in that rise about mid-way through (the scatter
+        points are the actual figures for each year and the line is a 
+        lowess smoothing of those points so that we can more easily see 
+        the trend).
+        The second graph shows the rise in total CO2 emissions over the 
+        same period and a similar trend can be seen with a sharp rise in 
+        emissions mid-twentieth century.
+        """)
+    with col5:
+        st.subheader("Total world CO2 emissions")
+        fig4 = px.line(df3.query("country == 'World' and year >= 1850"),"year","co2")
+        st.plotly_chart(fig4, use_container_width=True)
+
+    st.markdown('__Data Source:__ _Our World in Data CC BY_')
+
+
 else:
     # Display at start
     st.title("Climate Change Dashboard currently displaying land temperature anomalies!")
