@@ -233,11 +233,10 @@ elif viz_opt == "CO2 Emmissions":
 
     st.markdown('__Data Source:__ _Our World in Data CC BY_')
 
-elif viz_opt == "Temperature Variation":   #Aparna pls change language :(((
-    init_notebook_mode(connected=True)
+elif viz_opt == "Temperature Variation":   #Aparna pls change language :((( willl dooooo
     cf.go_offline()
     # Título
-    st.title("Estudo da variação da temperatura planetária")
+    st.title("Estudo da variação da temperature planetária")
     st.write("Criado por Diego Batista, Rogério Chinen, Tsuyoshi Fukuda")
 
     # Avisos importantes
