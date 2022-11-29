@@ -233,7 +233,7 @@ elif viz_opt == "CO2 Emmissions":
 
     st.markdown('__Data Source:__ _Our World in Data CC BY_')
 
-elif viz_opt == "Temperature Variation":   #Aparna pls change language :((( willl dooooo
+elif viz_opt == "Temperature Variation":   #Aparna pls change language :((( willl dooooo :)))))))
     cf.go_offline()
     # Título
     st.title("Estudo da variação da temperature planetária")
