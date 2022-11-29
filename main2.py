@@ -1198,7 +1198,7 @@ if viz_opt == "Analysis":
 
 
                 
-        # this will create a sidebar dropdown menu to controls page switching.
+        # this will create a sidebar dropdown menu to controls page switching. okay
 
         res = st.sidebar.radio('You Want : ', ['Historical Data and Plotting' ,'Future Data and Plotting'])
 
