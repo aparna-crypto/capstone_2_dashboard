@@ -20,6 +20,11 @@ from matplotlib import rcParams
 from API import owm
 from pyowm.commons.exceptions import NotFoundError
 
+
+from neuralprophet import NeuralProphet # For forecasting
+import datetime, json # For some other ops
+from statsmodels.tsa.stattools import acf # For acf plotting
+
 ####
 from plotly.offline import download_plotlyjs, init_notebook_mode, plot, iplot
 st.set_page_config(layout="wide")
@@ -1029,7 +1034,7 @@ if viz_opt == "Analysis":
 
 
 
-        # This function will train the neural prophet model on time the based on the selected historical data and return forcast for next 20 years. This will may take 10 to 15 seconds while training.
+        # This function will train the effing neural prophet model on time the based on the selected historical data and return forcast for next 20 years. This will may take 10 to 15 seconds while training.
 
 
         def training_and_forecasting(df):
@@ -1062,8 +1067,6 @@ if viz_opt == "Analysis":
             df.columns = ['AverageTemperature']
             
             return df
-
-
 
 
 
@@ -1194,32 +1197,15 @@ if viz_opt == "Analysis":
                 
 
 
-
-
-
-
-        # This will create another page where user can see about iNeuron and the developer.
                 
-        
-
-
-
-   if
-
-        # sidebar design 
-        a,b = st.sidebar.columns([1,8])
-        b.image('https://d24cdstip7q8pz.cloudfront.net/t/ineuron1/content/common/images/final%20logo.png',width=230,caption='iNeuron Intelligence Pvt Ltd')
-        st.sidebar.title('Temperature Change Analysis and Forecasting')
-
-
         # this will create a sidebar dropdown menu to controls page switching.
 
-        #res = st.sidebar.radio('You Want : ', ['Documentation','Historical Data and Plotting' ,'Future Data and Plotting','Feedback Us','About Us'])
+        res = st.sidebar.radio('You Want : ', ['Historical Data and Plotting' ,'Future Data and Plotting'])
 
-        #elif res == 'Historical Data and Plotting' :
-        show_historical()
-        #elif res == 'Future Data and Plotting' :
-        show_future()
+        if res == 'Historical Data and Plotting' :
+            show_historical()
+        elif res == 'Future Data and Plotting' :
+            show_future()
 
             
         # To hide streamlit default menu and footer
