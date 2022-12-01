@@ -212,7 +212,7 @@ elif viz_opt == "CO2 Emmissions":
         st.plotly_chart(fig, use_container_width=True)
 
     with col3: 
-        default_countries = ['World','United States','United Kingdom','EU-27','China', 'Australia']
+        default_countries = ['World','United States','United Kingdom','EU-27','China', 'Oceania']
         countries = df_co2['country'].unique()
 
         selected_countries = st.multiselect('Select country or group',countries,default_countries)
@@ -250,27 +250,26 @@ elif viz_opt == "CO2 Emmissions":
 
     st.markdown('__Data Source:__ _Our World in Data CC BY_')
 
-elif viz_opt == "Temperature Variation":   #Aparna pls change language :(((  
-    init_notebook_mode(connected=True)
+elif viz_opt == "Temperature Variation":   #Aparna pls change language :((( willl dooooo :)))))))
     cf.go_offline()
-    # Título
-    st.title("Estudo da variação da temperatura planetária")
-    st.write("Criado por Diego Batista, Rogério Chinen, Tsuyoshi Fukuda")
+    # Title
+    st.title("Planetary temperature variation study")
+    st.write("Raised by Diego Batista, Rogério Chinen, Tsuyoshi Fukuda")
 
-    # Avisos importantes
-    st.markdown("**Avisos importantes:**")
-    ## Aviso 1
-    st.write(f"As análises abaixo foram geradas a partir do conjunto de dados **'Climate Change: Earth Surface Temperature Data'**. Para mais informações, acesse:")
+    # Important notices
+    st.markdown("**Important Notices:**")
+    ## Notice 1
+    st.write(f"The analyzes below are generated from the data set **'Climate Change: Earth Surface Temperature Data'**. For more information, access:")
     link_kaggle = '[Climate Change: Earth Surface Temperature Data](https://www.kaggle.com/berkeleyearth/climate-change-earth-surface-temperature-data)'
     st.markdown(link_kaggle, unsafe_allow_html=True)
-    ## Aviso 2
-    st.write("Informações sobre continentes e códigos dos países foram obtidas no DataHub.io, postado por **JohnSnowLabs**. Para mais informações, acesse:")
+    ## Notice 2
+    st.write("Information on continents and two country codes obtained from DataHub.io, posted by **JohnSnowLabs**. For more information, access:")
     link_datahub = "[Country and Continent Codes List](https://datahub.io/JohnSnowLabs/country-and-continent-codes-list#data)"
     st.markdown(link_datahub, unsafe_allow_html=True)
     ##############################################################################################################
 
-    # Temperatura média na terra e oceano
-    st.subheader("Variações na temperatura global ao longo dos anos")
+    # Average temperature on land and ocean
+    st.subheader("Variations in global temperature over two years")
     ## dataframes
     def dataframe_datetime(df):
             df.dt = pd.to_datetime(df.dt)
@@ -279,26 +278,26 @@ elif viz_opt == "Temperature Variation":   #Aparna pls change language :(((
     df_land = dataframe_datetime(pd.read_csv("https://raw.githubusercontent.com/tvfukuda/LC-mod2-proj2/main/df_land.csv"))
     df_ocean = dataframe_datetime(pd.read_csv("https://raw.githubusercontent.com/tvfukuda/LC-mod2-proj2/main/df_ocean.csv"))
 
-    ## Plotagem dos gráficos
+    ## Plot two graphs
     def plot_land(df_land):
 
-            # formatação do hover
-            text_1 = [f'Ano: {x}<br>Temperatura: {str(round(y,1)).replace(".", ",")}°C'
+            #hover format
+            text_1 = [f'year: {x}<br>temperature: {str(round(y,1)).replace(".", ",")}°C'
                 for x, y in zip(df_land.dt.dt.year.tolist(),
                             df_land.LandAverageTemperature.tolist())]
 
-            text_2 = [f'Ano: {x}<br>Temperatura: {str(round(y,1)).replace(".", ",")}°C'
+            text_2 = [f'year: {x}<br>temperature: {str(round(y,1)).replace(".", ",")}°C'
                 for x, y in zip(df_land.dt.dt.year.tolist(),
                             df_land.LandMovingAverageTemperature12.tolist())]
 
             fig = go.Figure()
             fig.add_trace(go.Scatter(
-                x=df_land["dt"], y=round(df_land["LandAverageTemperature"],1), name='Temperatura média mensal', mode="markers", marker=dict(size = 3.5), opacity = 0.5, text=text_1, hoverinfo="text"))
+                x=df_land["dt"], y=round(df_land["LandAverageTemperature"],1), name='Monthly average temperature', mode="markers", marker=dict(size = 3.5), opacity = 0.5, text=text_1, hoverinfo="text"))
 
             fig.add_trace(go.Scatter(
-                x=df_land['dt'], y=round(df_land["LandMovingAverageTemperature12"],1), name='Temperatura média anual móvel', text=text_2, hoverinfo="text"))
+                x=df_land['dt'], y=round(df_land["LandMovingAverageTemperature12"],1), name='Moving Annual Average Temperature', text=text_2, hoverinfo="text"))
 
-            fig.layout.update(title_text='Temperatura global média dos continentes',
+            fig.layout.update(title_text='Average global temperature of two continents',
                                 xaxis_rangeslider_visible=True)
 
             fig.layout.update(
@@ -309,7 +308,7 @@ elif viz_opt == "Temperature Variation":   #Aparna pls change language :(((
                         linecolor='rgb(0, 0, 0)',
                         linewidth=2,
                         ticks='outside',
-                        title_text = "Ano",
+                        title_text = "Year",
                         tickfont=dict(
                             family='Arial',
                             size=12,
@@ -321,7 +320,7 @@ elif viz_opt == "Temperature Variation":   #Aparna pls change language :(((
                         zeroline=True,
                         showticklabels=True,
                         ticks='outside',
-                        title_text = "Temperatura em °C",
+                        title_text = "Temperature in °C",
                         linecolor='rgb(0, 0, 0)',
                         linewidth=2,
                 ),
@@ -331,10 +330,10 @@ elif viz_opt == "Temperature Variation":   #Aparna pls change language :(((
                         font=dict(
                             color="#000000",
                             family="arial")),
-                    x = 0.08, # move a legenda horizontalmente
-                    y=1.05 # move a legenda verticalmente
+                    x = 0.08, #move legend horizontally
+                    y=1.05 #move legend vertically
             ),
-                margin=dict( # altera as margens do gráfico
+                margin=dict( # alters the margins of the graph
                 autoexpand=False,
                 r=20,
                 l=100,
@@ -343,29 +342,29 @@ elif viz_opt == "Temperature Variation":   #Aparna pls change language :(((
             ),
                 plot_bgcolor='rgb(255,255,255)',  # plot_bgcolor='white'   
                 
-                # alteração das cores das linhas do gráfico
-                colorway=["#ff7f0e", "#162dc4"], # cores dos gráficos
+                # alteration of the colors of the graph lines
+                colorway=["#ff7f0e", "#162dc4"], 
             )
             st.plotly_chart(fig, use_container_width=True)
 
     def plot_ocean(df_ocean):
-            # formatação do hover
-            text_1 = [f'Ano: {x}<br>Temperatura: {str(round(y,1)).replace(".", ",")}°C'
+            # hover format
+            text_1 = [f'Year: {x}<br>Temperature: {str(round(y,1)).replace(".", ",")}°C'
                 for x, y in zip(df_ocean.dt.dt.year.tolist(),
                             df_ocean.LandAndOceanAverageTemperature.tolist())]
 
-            text_2 = [f'Ano: {x}<br>Temperatura: {str(round(y,1)).replace(".", ",")}°C'
+            text_2 = [f'Year: {x}<br>Temperature: {str(round(y,1)).replace(".", ",")}°C'
                 for x, y in zip(df_ocean.dt.dt.year.tolist(),
                             df_ocean.LandAndOceanMovingAverageTemperature12.tolist())]
 
             fig = go.Figure()
             fig.add_trace(go.Scatter(
-                x=df_ocean['dt'], y=round(df_ocean['LandAndOceanAverageTemperature'],1), name='Temperatura média mensal', mode="markers", marker=dict(size = 3.5), opacity = 0.5, text=text_1, hoverinfo="text"))
+                x=df_ocean['dt'], y=round(df_ocean['LandAndOceanAverageTemperature'],1), name='Monthly Average Temperature', mode="markers", marker=dict(size = 3.5), opacity = 0.5, text=text_1, hoverinfo="text"))
 
             fig.add_trace(go.Scatter(
-                x=df_ocean['dt'], y=round(df_ocean['LandAndOceanMovingAverageTemperature12'],1), name='Temperatura média anual móvel', text=text_2, hoverinfo="text"))
+                x=df_ocean['dt'], y=round(df_ocean['LandAndOceanMovingAverageTemperature12'],1), name='Moving Annual Average Temperature', text=text_2, hoverinfo="text"))
 
-            fig.layout.update(title_text='Temperatura global média dos continentes e oceanos',
+            fig.layout.update(title_text='Average global temperature of the continents and oceans',
                                 xaxis_rangeslider_visible=True)
 
             fig.layout.update(
@@ -376,7 +375,7 @@ elif viz_opt == "Temperature Variation":   #Aparna pls change language :(((
                         linecolor='rgb(0, 0, 0)',
                         linewidth=2,
                         ticks='outside',
-                        title_text = "Ano",
+                        title_text = "year",
                         tickfont=dict(
                             family='Arial',
                             size=12,
@@ -388,7 +387,7 @@ elif viz_opt == "Temperature Variation":   #Aparna pls change language :(((
                         zeroline=True,
                         showticklabels=True,
                         ticks='outside',
-                        title_text = "Temperatura em °C",
+                        title_text = "temperature in  °C",
                         linecolor='rgb(0, 0, 0)',
                         linewidth=2
                     ),
@@ -398,10 +397,10 @@ elif viz_opt == "Temperature Variation":   #Aparna pls change language :(((
                         font=dict(
                             color="#000000",
                             family="arial")),
-                    x = 0.08, # move a legenda horizontalmente
-                    y=1.05 # move a legenda verticalmente
+                    x = 0.08, #move legend horizontally
+                    y=1.05 #move legend vertically
             ),
-                margin=dict( # altera as margens do gráfico
+                margin=dict( #alters the margins of the graph
                 autoexpand=False,
                 r=20,
                 l=100,
@@ -410,83 +409,83 @@ elif viz_opt == "Temperature Variation":   #Aparna pls change language :(((
             ),
                 plot_bgcolor='rgb(255,255,255)',  # plot_bgcolor='white'   
                 
-                # alteração das cores das linhas do gráfico
-                colorway=["#162dc4", "#cf2c17"], # cores dos gráficos
+                # alteration of the colors of the graph lines
+                colorway=["#162dc4", "#cf2c17"], # cores two graphics
             )
             st.plotly_chart(fig, use_container_width=True)
 
         
     # checknox
-    is_land = st.radio("Escolha abaixo o gráfico das temperaturas médias globais para avaliação", ("Continentes", "Continentes + Oceanos"))
+    is_land = st.radio("Choose below the graph of global average temperatures for evaluation", ("Continents", "Continents + Oceans"))
     #st.write(is_land)
 
-    if is_land == "Continentes":
+    if is_land == "Continents":
         plot_land(df_land)
-    elif is_land == "Continentes + Oceanos":
+    elif is_land == "Continents + Oceans":
         plot_ocean(df_ocean)
     else:
         pass
 
     ##############################################################################################################
 
-    # temperatura continentes
-    st.subheader("Temperaturas médias nos continentes")
+    # continents of different continents
+    st.subheader("Average temperatures on the continents")
 
-    # Temperatura das cidades de 1901 a 2013
+    
     df_city = pd.read_csv("https://raw.githubusercontent.com/tvfukuda/LC-mod2-proj2/main/Dataset_limpo_reduzido.csv")
 
 
-    def continentes(df_continent):
-            # Gerando os modelos para o hover
-            text = [f'Continente: {x}<br>Ano: {y}<br>Temperatura: {str(round(z,2)).replace(".", ",")}°C'
+    def continents(df_continent):
+            # Generating the models for hover
+            text = [f'continent: {x}<br>year: {y}<br>temperature: {str(round(z,2)).replace(".", ",")}°C'
                     for x, y, z in zip(df_continent.Continent_Name.tolist(), df_continent.Year.tolist(),
                                     df_continent.AverageTemperature.tolist())]
 
-            # Gerando a visualização gráfica
+            # Generating the graphic display
             fig = go.Figure()
 
-            # criando o plot para a África
+            # Plot for Africa
             fig.add_trace(go.Scatter(x=df_continent.Year[df_continent.Continent_Name == "Africa"],
                                     y=df_continent.AverageTemperature[df_continent.Continent_Name == "Africa"],
                                     mode="lines+markers", name="Africa", text=text[:12], hoverinfo='text'))
 
-            # Criando o plot para a Ásia
+            # Plot for Ásia
             fig.add_trace(go.Scatter(x=df_continent.Year[df_continent.Continent_Name == "Asia"],
                                     y=df_continent.AverageTemperature[df_continent.Continent_Name == "Asia"],
                                     mode="lines+markers", name="Asia", text=text[12:24], hoverinfo='text'))
 
-            # Criando o plot para a Europa
+            # Plot for Europe
             fig.add_trace(go.Scatter(x=df_continent.Year[df_continent.Continent_Name == "Europe"],
                                     y=df_continent.AverageTemperature[df_continent.Continent_Name == "Europe"],
-                                    mode="lines+markers", name="Europa", text=text[24:36], hoverinfo='text'))
+                                    mode="lines+markers", name="Europe", text=text[24:36], hoverinfo='text'))
 
-            # Criando o plot para a Oceania
+            # Plot for Oceania
             fig.add_trace(go.Scatter(x=df_continent.Year[df_continent.Continent_Name == "Oceania"],
                                     y=df_continent.AverageTemperature[df_continent.Continent_Name == "Oceania"],
                                     mode="lines+markers", name="Oceania", text=text[48:60], hoverinfo='text'))
 
-            # Criando o plot para a América do Norte e Central
+            # Plot for Central North America 
             fig.add_trace(go.Scatter(x=df_continent.Year[df_continent.Continent_Name == "North America"],
                                     y=df_continent.AverageTemperature[df_continent.Continent_Name == "North America"],
-                                    mode="lines+markers", name="América do Norte", text=text[36:48], hoverinfo='text'))
+                                    mode="lines+markers", name="North America", text=text[36:48], hoverinfo='text'))
 
-            # Criando o plot para a América do Sul
+            # Plot for Sorth America
             fig.add_trace(go.Scatter(x=df_continent.Year[df_continent.Continent_Name == "South America"],
                                     y=df_continent.AverageTemperature[df_continent.Continent_Name == "South America"],
-                                    mode="lines+markers", name="América do Sul", text=text[60:72], hoverinfo='text'))
+                                    mode="lines+markers", name="Sorth America", text=text[60:72], hoverinfo='text'))
 
             ########################
-            #fig.update_layout(title_text = "Variação da temperatura dos continentes por década entre 1901 e 2013")
+            #fig.update_layout(title_text = "Temperature variation of the two continents per decade between 1901 and 2013")
             fig.update_layout(
                 title=dict(
-                    text = "Variação da temperatura por continente entre 1901 e 2013",
+                    text = "Temperature variation by continent between 1901 and 2013",
                     font=dict(
                         #color="#000000",
                         family="arial",
                     size = 18
                     ),
                 x = 0.5),
-            # trabalhando a legenda
+            # working on legend
             legend=dict(
                 font=dict(
                     #color="#000000",
@@ -498,46 +497,46 @@ elif viz_opt == "Temperature Variation":   #Aparna pls change language :(((
                     font=dict(
                         #color="#000000",
                         family="arial")),
-                x=0.04, # move a legenda horizontalmente
-                y=-0.2 # move a legenda verticalmente
+                x=0.04, #move legend horizontally
+                y=-0.2 # move legend vertically
             ),
             
-            font=dict( # fonte geral do gráfico
+            font=dict( #general font of graphic
                 #color="#000000",
                 family="arial",
                 size=14
             ),
             
-            separators=",", # separador dos decimais nas palhetas
+            separators=",", 
                 
-            margin=dict( # altera as margens do gráfico
+            margin=dict( 
                 autoexpand=False,
                 r=50,
                 l=70,
                 t=100,
                 b=130
             ),
-            # alteração do fundo do gráfico
+            
             plot_bgcolor="RGB(255, 255, 255)",
             
-            # alteração das cores das linhas do gráfico
+            
             colorway=["#ff7f0e", "#f0e516", "#4e51e6", "#d60b30", "#0f5410", "#710e9c"], # cores dos gráficos
             
-            # alterações nos eixos x e y
+            
             xaxis=dict(
                     showline=True,
                     showticklabels=True,
                     linecolor='rgb(204, 204, 204)',
                     linewidth=1,
                     ticks='outside',
-                    title_text = "Décadas",
+                    title_text = "Decades",
                     title_font = {"size": 15},
                     title_standoff = 60),
                     #rangeslider = dict(visible = True)
             yaxis=dict(
                     showline=True,
                     gridcolor='#ebebf0',
-                    title_text = "Temperatura em °C",
+                    title_text = "Mean temperature in °C",
                     title_font = {"size": 15}),
             
             #hovermode = "closest"
@@ -548,9 +547,9 @@ elif viz_opt == "Temperature Variation":   #Aparna pls change language :(((
             )
             st.plotly_chart(fig, use_container_width=True)
 
-    continentes(df_city)
-    # charts para a variação da temperatura
-    st.write("**Variações das temperaturas médias por continente** (Cálculos a partir das temperaturas médias nas cidades em cada continente entre 1901 e 2013).")
+    continents(df_city)
+    # charts for the temperature variation
+    st.write("**Variations in the mean temperatures of continent** (Calculations based on average temperatures in cities in each continent between 1901 and 2013).")
 
     col1, col2, col3 = st.columns(3)
     col4, col5, col6 = st.columns(3)
@@ -562,41 +561,41 @@ elif viz_opt == "Temperature Variation":   #Aparna pls change language :(((
 
     # África
     v_min, v_max = variacao_temp(df_city, "Africa")
-    col1.metric('África', v_max, round((v_max-v_min), 1))
+    col1.metric('Africa', v_max, round((v_max-v_min), 1))
 
-    # América do Sul
+    # Sorth America
     v_min, v_max = variacao_temp(df_city, "South America")
-    col2.metric('América do Sul', v_max, round((v_max-v_min), 1))
+    col2.metric('Sorth America', v_max, round((v_max-v_min), 1))
 
     # Ásia
     v_min, v_max = variacao_temp(df_city, "Asia")
-    col3.metric('Ásia', v_max, round((v_max-v_min), 1))
+    col3.metric('Asia', v_max, round((v_max-v_min), 1))
 
-    # América do Norte
+    # North America
     v_min, v_max = variacao_temp(df_city, "North America")
-    col4.metric('América do Norte', v_max, round((v_max-v_min), 1))
+    col4.metric('North America', v_max, round((v_max-v_min), 1))
 
     # Oceania
     v_min, v_max = variacao_temp(df_city, "Oceania")
-    col5.metric('Oceania', v_max, round((v_max-v_min), 1))
+    col5.metric('Australia', v_max, round((v_max-v_min), 1))
 
-    # Europa
+    # Europe
     v_min, v_max = variacao_temp(df_city, "Europe")
-    col6.metric('Europa', v_max, round((v_max-v_min), 1))
+    col6.metric('Europe', v_max, round((v_max-v_min), 1))
 
     ##############################################################################################################
 
-    # Temperaturas por países de escolha
-    st.subheader("Comparativo entre países / cidades de interesse")
+    # temperatures by countries of choice
+    st.subheader("Comparison between countries / cities of interest")
     by_countries = pd.read_csv("https://raw.githubusercontent.com/tvfukuda/LC-mod2-proj2/main/research_countries.csv")
     by_cities = pd.read_csv("https://raw.githubusercontent.com/tvfukuda/LC-mod2-proj2/main/by_cities.csv")
 
-    is_countries = st.radio("Deseja comparar países ou cidades entre si?", ("Países", "Cidades"))
+    is_countries = st.radio("Do you want to compare countries or cities with each other?", ("countries", "cities"))
 
-    if is_countries == "Países":
-        countries = st.multiselect('Selecione o(s) país(es)', by_countries.Country.unique().tolist(), ['Brazil', 'Denmark'])
+    if is_countries == "countries":
+        countries = st.multiselect('Select the country(ies)', by_countries.Country.unique().tolist(), ['Brazil', 'Denmark'])
 
-        marcar_tudo = st.checkbox('Selecionar todos os países da lista? (Não recomendado)')
+        marcar_tudo = st.checkbox('Select all countries from the list? ')
 
         def research_by_country(df, countries, marcar_tudo):
             if marcar_tudo:
@@ -607,10 +606,10 @@ elif viz_opt == "Temperature Variation":   #Aparna pls change language :(((
                     y = "AverageTemperature",
                     color = "Country",
                     markers = True,
-                    title = "Evolução da temperatura médias nos países selecionados",
-                    labels={"AverageTemperature": f"Temperatura média em °C",
-                            "Year": "Década",
-                            "Country": "País"})
+                    title = "Mean temperaturein selected countries",
+                    labels={"AverageTemperature": f"Mean temperature in °C",
+                            "Year": "Decades",
+                            "Country": "Country"})
                 st.plotly_chart(fig, use_container_width=True)
             else:
                 df = df[df.Country.isin(countries)]
@@ -620,19 +619,19 @@ elif viz_opt == "Temperature Variation":   #Aparna pls change language :(((
                     y = "AverageTemperature",
                     color = "Country",
                     markers = True,
-                    title = "Evolução da temperatura médias nos países selecionados",
-                    labels={"AverageTemperature": f"Temperatura média em °C",
-                            "Year": "Década",
-                            "Country": "País"})
+                    title = "Mean temperature evolution in selected countries",
+                    labels={"AverageTemperature": f"Mean temperature in °C",
+                            "Year": "Decades",
+                            "Country": "Country"})
 
                 st.plotly_chart(fig, use_container_width=True)
 
-        # chamando a função para exibição
-        if st.button("Pronto"):
+        # calling the function to display
+        if st.button("Go"):
             research_by_country(by_countries, countries, marcar_tudo)
 
     else:
-        cities = st.multiselect('Selecione a(s) cidade(s). Digite "País, cidade"', by_cities.City_Country.unique().tolist(), ['Afghanistan, Baglan', 'Brazil, São Paulo'])
+        cities = st.multiselect('Select a(n) city(s). Type "Country, city"', by_cities.City_Country.unique().tolist(), ['Afghanistan, Baglan', 'Brazil, São Paulo'])
             
         def research_by_city(df, cities):
             countries = [string.split(",")[0].strip() for string in cities]
@@ -644,22 +643,22 @@ elif viz_opt == "Temperature Variation":   #Aparna pls change language :(((
                 y = "AverageTemperature",
                 color = "City",
                 markers = True,
-                title = "Evolução da temperatura médias nas cidades selecionadas",
-                labels={"AverageTemperature": "Temperatura média em °C",
-                        "Year": "Década",
-                        "City": "Cidade"})
+                title = "Evolution of average temperatures in selected cities",
+                labels={"AverageTemperature": "Mean temperature in °C",
+                        "Year": "Decade",
+                        "City": "City"})
 
             st.plotly_chart(fig, use_container_width=True)
 
-        # chamando a função para exibição
-        if st.button("Pronto"):
+        # calling the function to display
+        if st.button("Go"):
             research_by_city(by_cities, cities)
         
         
     ##############################################################################################################
 
-    st.subheader("Predição da variação da temperatura nos próximos anos")
-    periodo = st.slider('Escolha quantos anos serão utilizados na previsão:', 0, 100, 10)    
+    st.subheader("Prediction of the temperature variation in the next years")
+    periodo = st.slider('Choose how many years will be used in the forecast: ', 0, 100, 10)    
 
     def predicao(df, periodo):
         df = df[['dt', 'LandAndOceanMovingAverageTemperature12']]
@@ -670,15 +669,14 @@ elif viz_opt == "Temperature Variation":   #Aparna pls change language :(((
         forecast = m.predict(future)
         return m, forecast
 
-    if st.button("Vai"):
+    if st.button("Go"):
         m, forecast = predicao(df_ocean, periodo)
-        fig_1 = plot_plotly(m, forecast, xlabel="Anos", ylabel="Temperatura média em °C")
+        fig_1 = plot_plotly(m, forecast, xlabel="years", ylabel="Mean temperature in °C")
         st.plotly_chart(fig_1, use_container_width=True)
 
-        st.write("**Métricas da predição**")
+        st.write("**Prediction Metrics**")
         fig_2 = m.plot_components(forecast)
         st.write(fig_2)
-
 
 elif viz_opt == "Weather Forecaster":
 
