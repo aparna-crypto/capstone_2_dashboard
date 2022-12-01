@@ -38,7 +38,7 @@ data = load_data("data/Environment_Temperature_change_E_All_Data_NOFLAG.csv")
 st.sidebar.title("Display options")
 
 #Selecting visualization paths
-viz_opt = st.sidebar.selectbox(label="Select what you wish to see!", options=["None","Land temperature anomalies", "CO2 Emmissions","Temperature Variation","Weather Forecaster", "Analysis"])
+viz_opt = st.sidebar.selectbox(label="Select what you wish to see!", options=["None","Land temperature anomalies", "CO2 Emmissions","Temperature Variation","Weather Forecaster", "Data Analysis"])
 
 if viz_opt == "Land temperature anomalies":
 
@@ -782,7 +782,7 @@ elif viz_opt == "Weather Forecaster":
         weather = obs.weather
         st.title(f"Weather at {place[0].upper() + place[1:]} currently: ")
         if unit_c == 'celsius':
-            st.write(f"Temperature: {temperature} °C")
+            st.write(f"#### Temperature: {temperature} °C")
         else:
             st.write(f"#### Temperature: {temperature} F")
         st.write(f"#### Sky: {weather.detailed_status}")
@@ -806,8 +806,7 @@ elif viz_opt == "Weather Forecaster":
             st.write("####  HURRICANE ALERT")
         if forecaster.will_have_clear():
             st.write("####  Clear Skies predicted")
-        if forecaster.will_have_clouds():
-            st.write("####  Cloudy Skies predicted")
+        
 
         st.write('                ')
         st.write('                ')
@@ -836,7 +835,7 @@ elif viz_opt == "Weather Forecaster":
 
 
 
-if viz_opt == "Analysis":
+if viz_opt == "Data Analysis":
     
         # Loading and initializing all datasets
 
@@ -1201,8 +1200,7 @@ if viz_opt == "Analysis":
                 
         # this will create a sidebar dropdown menu to controls page switching. okay
 
-        res = st.sidebar.radio('You Want : ', ['Historical Data and Plotting' ,'Future Data and Plotting'])
-
+        res = 'Historical Data and Plotting'
         if res == 'Historical Data and Plotting' :
             show_historical()
         elif res == 'Future Data and Plotting' :
