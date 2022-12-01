@@ -175,7 +175,6 @@ if viz_opt == "Land temperature anomalies":
 
 
 elif viz_opt == "CO2 Emmissions":
-    st.title("CO2 Emmissions")
     @st.cache
     def get_data(url):
         return pd.read_csv(url)
@@ -190,63 +189,58 @@ elif viz_opt == "CO2 Emmissions":
 
     st.markdown("""
     # World CO2 emissions
-    __The graphs below show the CO2 emissions per capita for the entire 
+    The graphs below show the CO2 emissions per capita for the entire 
     world and individual countries over time.
     Select a year with the slider in the left-hand graph and countries 
-    from the drop down menu in the other one.__
-    __Scroll down to see charts demonstrating the correlation between 
-    the level of CO2 and global warming.__
-    __Hover over any of the charts to see more detail__
-    ---
+    from the drop down menu in the other one.
+    Scroll down to see charts demonstrating the correlation between 
+    the level of CO2 and global warming.
+    Hover over any of the charts to see more detail.
     """)
+    
 
-    col2, space2, col3 = st.columns((10,1,10))
+    year = st.slider('Select year',1750,2020)
+    fig = px.choropleth(df_co2[df_co2['year']==year], locations="iso_code",
+                        color="co2_per_capita",
+                        hover_name="country",
+                        range_color=(0,25),
+                        color_continuous_scale=px.colors.sequential.Reds)
+    st.plotly_chart(fig, use_container_width=True)
 
-    with col2:
-        year = st.slider('Select year',1750,2020)
-        fig = px.choropleth(df_co2[df_co2['year']==year], locations="iso_code",
-                            color="co2_per_capita",
-                            hover_name="country",
-                            range_color=(0,25),
-                            color_continuous_scale=px.colors.sequential.Reds)
-        st.plotly_chart(fig, use_container_width=True)
+    default_countries = ['World','China', 'Oceania']
+    countries = df_co2['country'].unique()
 
-    with col3: 
-        default_countries = ['World','United States','United Kingdom','EU-27','China', 'Oceania']
-        countries = df_co2['country'].unique()
+    selected_countries = st.multiselect('Select country or group',countries,default_countries )
 
-        selected_countries = st.multiselect('Select country or group',countries,default_countries)
+    df3 = df_co2.query('country in @selected_countries' )
 
-        df3 = df_co2.query('country in @selected_countries' )
+    fig2 = px.line(df3,"year","co2_per_capita",color="country")
 
-        fig2 = px.line(df3,"year","co2_per_capita",color="country")
-
-        st.plotly_chart(fig2, use_container_width=True)
-
+    st.plotly_chart(fig2, use_container_width=True)
         
     # st.dataframe(get_warming_data())
 
-    col4, space3, col5,space4,col6 = st.columns((10,1,10,1,10))
-    with col4:
-        st.markdown("""
-        ## Corelation between CO2 emission and global warming
-        This can be seen in the adjacent graphs. 
+    #col4, space3, col5,space4,col6 = st.columns((10,1,10,1,10))
+    st.markdown("""
+    ## Corelation between CO2 emission and global warming
+    This can be seen in the adjacent graphs. 
+    
+    The first show temperature
+    has changed since 1850 and you can see that temperatures begin 
+    to rise after the beginning of the twentieth century but there 
+    is a sharp upturn in that rise about mid-way through (the scatter
+    points are the actual figures for each year and the line is a 
+    lowess smoothing of those points so that we can more easily see 
+    the trend).
+    The second graph shows the rise in total CO2 emissions over the 
+    same period and a similar trend can be seen with a sharp rise in 
+    emissions mid-twentieth century.
+    """)
+
         
-        The first show temperature
-        has changed since 1850 and you can see that temperatures begin 
-        to rise after the beginning of the twentieth century but there 
-        is a sharp upturn in that rise about mid-way through (the scatter
-        points are the actual figures for each year and the line is a 
-        lowess smoothing of those points so that we can more easily see 
-        the trend).
-        The second graph shows the rise in total CO2 emissions over the 
-        same period and a similar trend can be seen with a sharp rise in 
-        emissions mid-twentieth century.
-        """)
-    with col5:
-        st.subheader("Total world CO2 emissions")
-        fig4 = px.line(df3.query("country == 'World' and year >= 1850"),"year","co2")
-        st.plotly_chart(fig4, use_container_width=True)
+    st.subheader("Total world CO2 emissions")
+    fig4 = px.line(df3.query("country == 'World' and year >= 1850"),"year","co2")
+    st.plotly_chart(fig4, use_container_width=True)
 
     st.markdown('__Data Source:__ _Our World in Data CC BY_')
 
@@ -775,7 +769,7 @@ elif viz_opt == "Weather Forecaster":
             unit_c = 'fahrenheit'
 
         for weather in forecast:
-            day = datetime.utcfromtimestamp(weather.reference_time())
+            day = datetime.datetime.utcfromtimestamp(weather.reference_time())
             date1 = day.date()
             if date1 not in dates_2:
                 dates_2.append(date1)
@@ -1069,7 +1063,8 @@ if viz_opt == "Analysis":
             dates_df['y'] = np.nan
             
             def add_dates(x):
-                return x + datetime.timedelta(days=1)
+                return df.apply(lambda e: (e[x] + e[ datetime.timedelta(days=1)]), axis=1)
+                #return x + datetime.timedelta(days=1)
 
             dates_df['ds'] = dates_df['ds'].apply(add_dates)
             dates_pred = m.predict(dates_df)
