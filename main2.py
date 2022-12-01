@@ -247,9 +247,7 @@ elif viz_opt == "CO2 Emmissions":
 elif viz_opt == "Temperature Variation":   #Aparna pls change language :((( willl dooooo :)))))))
     cf.go_offline()
     # Title
-    st.title("Planetary temperature variation study")
-    st.write("Raised by Diego Batista, Rogério Chinen, Tsuyoshi Fukuda")
-
+    st.title("Planetary temperature variation analysis")
     # Important notices
     st.markdown("**Important Notices:**")
     ## Notice 1
@@ -645,8 +643,8 @@ elif viz_opt == "Temperature Variation":   #Aparna pls change language :((( will
             st.plotly_chart(fig, use_container_width=True)
 
         # calling the function to display
-        if st.button("Go"):
-            research_by_city(by_cities, cities)
+        #if st.button("Go"):
+        research_by_city(by_cities, cities)
         
         
     ##############################################################################################################
@@ -658,19 +656,18 @@ elif viz_opt == "Temperature Variation":   #Aparna pls change language :((( will
         df = df[['dt', 'LandAndOceanMovingAverageTemperature12']]
         df.rename(columns={'dt': 'ds', 'LandAndOceanMovingAverageTemperature12': 'y'}, inplace = True)
         m = Prophet()
-        m.fit(df,epochs=10)
+        m.fit(df)
         future = m.make_future_dataframe(periods=(periodo * 365))
         forecast = m.predict(future)
         return m, forecast
 
-    if st.button("Go"):
-        m, forecast = predicao(df_ocean, periodo)
-        fig_1 = plot_plotly(m, forecast, xlabel="years", ylabel="Mean temperature in °C")
-        st.plotly_chart(fig_1, use_container_width=True)
+    m, forecast = predicao(df_ocean, periodo)
+    fig_1 = plot_plotly(m, forecast, xlabel="years", ylabel="Mean temperature in °C")
+    st.plotly_chart(fig_1, use_container_width=True)
 
-        st.write("**Prediction Metrics**")
-        fig_2 = m.plot_components(forecast)
-        st.write(fig_2)
+    st.write("**Prediction Metrics**")
+    fig_2 = m.plot_components(forecast)
+    st.write(fig_2)
 
 elif viz_opt == "Weather Forecaster":
 
@@ -786,32 +783,32 @@ elif viz_opt == "Weather Forecaster":
         weather = obs.weather
         st.title(f"Weather at {place[0].upper() + place[1:]} currently: ")
         if unit_c == 'celsius':
-            st.write(f"## Temperature: {temperature} °C")
+            st.write(f"Temperature: {temperature} °C")
         else:
-            st.write(f"## Temperature: {temperature} F")
-        st.write(f"## Sky: {weather.detailed_status}")
-        st.write(f"## 🌪  Wind Speed: {round(weather.wind(unit='km_hour')['speed'])} km/h")
-        st.write(f"### Sunrise Time :     {weather.sunrise_time(timeformat='iso')} GMT")
-        st.write(f"### Sunset Time :      {weather.sunset_time(timeformat='iso')} GMT")
+            st.write(f"#### Temperature: {temperature} F")
+        st.write(f"#### Sky: {weather.detailed_status}")
+        st.write(f"#### Wind Speed: {round(weather.wind(unit='km_hour')['speed'])} km/h")
+        st.write(f"#### Sunrise Time :     {weather.sunrise_time(timeformat='iso')} GMT")
+        st.write(f"#### Sunset Time :      {weather.sunset_time(timeformat='iso')} GMT")
 
         # Expected Temperature Alerts
-        st.title("Expected Temperature Changes/Alerts: ")
+        st.title(" Expected Temperature Changes/Alerts: ")
         if forecaster.will_have_fog():
             st.write("### FOG ALERT!!")
         if forecaster.will_have_rain():
-            st.write("### RAIN ALERT!!")
+            st.write("#### RAIN ALERT!!")
         if forecaster.will_have_storm():
-            st.write("### STORM ALERT!!")
+            st.write("#### STORM ALERT!!")
         if forecaster.will_have_snow():
-            st.write("### SNOW ALERT!!")
+            st.write("#### SNOW ALERT!!")
         if forecaster.will_have_tornado():
-            st.write("### TORNADO ALERT!!")
+            st.write("#### TORNADO ALERT!!")
         if forecaster.will_have_hurricane():
-            st.write("### HURRICANE ALERT")
+            st.write("####  HURRICANE ALERT")
         if forecaster.will_have_clear():
-            st.write("### CLEAR WEATHER PREDICTED!!")
+            st.write("####  Clear Skies predicted")
         if forecaster.will_have_clouds():
-            st.write("### CLOUDY SKIES")
+            st.write("####  Cloudy Skies predicted")
 
         st.write('                ')
         st.write('                ')
@@ -823,10 +820,10 @@ elif viz_opt == "Weather Forecaster":
 
         # To give max and min temperature
         i = 0
-        st.write(f"# Date :  Max - Min  ({unit})")
+        st.write(f" Date :  Max - Min  ({unit})")
         for obj in days:
             ta = (obj.strftime("%d/%m"))
-            st.write(f'### ➡️ {ta} :\t   ({max_t[i]} - {min_t[i]})')
+            st.write(f' --> {ta} :\t   ({max_t[i]} - {min_t[i]})')
             i += 1
 
 
@@ -1226,6 +1223,5 @@ if viz_opt == "Analysis":
 elif viz_opt == "None":
 
         # Display at start
-        st.title("Climate Change Dashboard currently displaying land temperature anomalies!")
-        st.subheader('''Land temperature anomaly is defined as: *"The departure from the average temperature, positive or negative, over a certain period (day, week, month or year)"* ''')
-        st.subheader('''To start exploring the data, please use the sidebar on the left side!''')
+        st.title("Climate Change Dashboard")
+        st.subheader("This dashboard is for ------")
