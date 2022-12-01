@@ -242,7 +242,6 @@ elif viz_opt == "CO2 Emmissions":
     fig4 = px.line(df3.query("country == 'World' and year >= 1850"),"year","co2")
     st.plotly_chart(fig4, use_container_width=True)
 
-    st.markdown('__Data Source:__ _Our World in Data CC BY_')
 
 elif viz_opt == "Temperature Variation":   #Aparna pls change language :((( willl dooooo :)))))))
     cf.go_offline()
