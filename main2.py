@@ -171,7 +171,6 @@ if viz_opt == "Land temperature anomalies":
         plot_g2()
         new_title = '<p style="font-family:sans-serif; font-size: 21px;">After thorough EDA and taking data from 1961-2019 into consideration, it can be found that Senegal has the highest temperature fluctuations recorded , followed by Austria and the Eastern Europe(descending order), which is the result of Anthropogenic activities. This conclusion can be substantiated by online blogs and  articles which show that European countries have found themselves having fluctuating temperatures. For instancem The Alps have recorded a loss of 30 meters(98 feet) of ice thickness between 1997-2021.</p>'
         st.markdown(new_title, unsafe_allow_html=True)
-        
         st.write(pd.DataFrame(Top_countries))
 
 
@@ -666,7 +665,7 @@ elif viz_opt == "Temperature Variation":   #Aparna pls change language :(((
         df = df[['dt', 'LandAndOceanMovingAverageTemperature12']]
         df.rename(columns={'dt': 'ds', 'LandAndOceanMovingAverageTemperature12': 'y'}, inplace = True)
         m = Prophet()
-        m.fit(df)
+        m.fit(df,epochs=10)
         future = m.make_future_dataframe(periods=(periodo * 365))
         forecast = m.predict(future)
         return m, forecast
@@ -1056,12 +1055,12 @@ if viz_opt == "Analysis":
             df.columns = ['ds','y']
             
 
-            prophet = NeuralProphet()
             
             st.info('Training. It takes only 10 to 15 seconds. Please Wait....')
             progress = st.progress(0)
             progress.progress(10)
-            prophet.fit(df,freq='1m',epochs=10)
+            m = Prophet()
+            m.fit(df)
             
             progress.progress(100)
             st.success('Training Completed. See results..')
@@ -1075,7 +1074,7 @@ if viz_opt == "Analysis":
                 return x + datetime.timedelta(days=1)
 
             dates_df['ds'] = dates_df['ds'].apply(add_dates)
-            dates_pred = prophet.predict(dates_df)
+            dates_pred = m.predict(dates_df)
             df = dates_pred.set_index('ds')[['yhat1']]
             df.columns = ['AverageTemperature']
             
