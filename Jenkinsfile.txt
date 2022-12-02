@@ -13,14 +13,14 @@ pipeline {
     
         stage('Build Image'){
             steps {
-                bat 'docker build -t Aparnaramesh12/dashboard .'
+                bat 'docker build -t aparnaramesh12/dashboard .'
             }
         }
         
         stage('Push to DockerHub') {
             steps {
                 bat 'echo $dockerhub_PSW | docker login -u $dockerhub_USR --password-stdin'
-                bat 'docker push Aparnaramesh12/dashboard'
+                bat 'docker push aparnaramesh12/dashboard'
             }
         }
   
