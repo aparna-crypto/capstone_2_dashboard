@@ -19,7 +19,7 @@ pipeline {
         
         stage('Push to DockerHub') {
             steps {
-                bat 'echo $dockerhub_PSW | docker login -u $dockerhub_USR --password-stdin'
+                bat 'echo 'dckr_pat_snxIGn21TK6eSoIQKYpQNIh1if8' | docker login -u 'aparnaramesh12' --password-stdin'
                 bat 'docker push aparnaramesh12/dashboard'
             }
         }
