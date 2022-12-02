@@ -13,20 +13,20 @@ pipeline {
     
         stage('Build Image'){
             steps {
-                sh 'sudo docker build -t capstone/dashboard .'
+                bat 'sudo docker build -t capstone/dashboard .'
             }
         }
         
         stage('Push to DockerHub') {
             steps {
-                sh 'echo $dockerhub_PSW | docker login -u $dockerhub_USR --password-stdin'
-                sh 'docker push capstone/dashboard'
+                bat 'echo $dockerhub_PSW | docker login -u $dockerhub_USR --password-stdin'
+                bat 'docker push capstone/dashboard'
             }
         }
   
         stage('Run Image') {
             steps {
-                sh 'docker run -p 8051:8051 capstone/dashboard'
+                bat 'docker run -p 8051:8051 capstone/dashboard'
             }
         }
 
