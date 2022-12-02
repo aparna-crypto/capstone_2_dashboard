@@ -10,7 +10,7 @@ pipeline {
     
         stage('Build Image'){
             steps {
-                sh 'sudo docker build -t dashboard'
+                sh 'sudo docker build -t dashboard .'
             }
         }
   
