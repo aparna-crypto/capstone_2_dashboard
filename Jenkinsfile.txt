@@ -2,7 +2,7 @@ pipeline {
     agent any
     
     environment{
-        DockerHub=credentials('DockerHub')
+        dockerhub=credentials('DockerHub')
     }
     stages {
         stage('Clone repo') {
@@ -19,6 +19,7 @@ pipeline {
         
         stage('Push to DockerHub') {
             steps {
+                sh 'echo $dockerhub_PSW | docker login -u #dockerhub_USR --password-stdin'
                 sh 'docker push capstone/dashboard'
             }
         }
