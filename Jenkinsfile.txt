@@ -33,7 +33,7 @@ pipeline {
         stage('Testing') {
             steps {
                 echo 'Process Complete'
-            }
+            } 
         }
     }
 }
