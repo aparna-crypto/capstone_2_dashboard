@@ -2,27 +2,27 @@ pipeline {
     agent any
 
     stages {
-        stage('Build') {
+        stage('Clone repo') {
             steps {
-                echo 'Building'
+                checkout scm
             }
         }
     
-        stage('Deploy') {
+        stage('Build Image'){
             steps {
-                echo 'Deploying'
+                sh 'sudo docker build -t dashboard'
             }
         }
   
-        stage('Test') {
+        stage('Run Image') {
             steps {
-                echo 'Hello World'
+                sh 'docker run -p 8051:8051 dashboard'
             }
         }
 
-        stage('Release') {
+        stage('Testing') {
             steps {
-                echo 'Releasing'
+                echo 'Process Complete'
             }
         }
     }
