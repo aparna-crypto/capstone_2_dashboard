@@ -1,6 +1,9 @@
 pipeline {
     agent any
-
+    
+    environment{
+        DockerHub=credentials('DockerHub')
+    }
     stages {
         stage('Clone repo') {
             steps {
@@ -10,13 +13,19 @@ pipeline {
     
         stage('Build Image'){
             steps {
-                sh 'sudo docker build -t dashboard .'
+                sh 'sudo docker build -t capstone/dashboard .'
+            }
+        }
+        
+        stage('Push to DockerHub') {
+            steps {
+                sh 'docker push capstone/dashboard'
             }
         }
   
         stage('Run Image') {
             steps {
-                sh 'docker run -p 8051:8051 dashboard'
+                sh 'docker run -p 8051:8051 capstone/dashboard'
             }
         }
 
