@@ -20,6 +20,8 @@ pipeline {
 
         stage('Testing') {
             steps {
+            
+                bat 'pytest'
                 echo 'Process Complete'
             } 
         }
