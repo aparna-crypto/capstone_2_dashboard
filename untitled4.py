@@ -91,3 +91,7 @@ temp = temp[temp['months'] == 'Meteorological year']
 Top_countries = temp.groupby('area',).sum().sort_values('temperature', ascending=False)[:10].reset_index()['area']
 
 Top_countries= (Top_countries).to_frame(name="Countries")
+
+
+def add(a, b):
+    return a + b
