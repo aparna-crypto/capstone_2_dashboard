@@ -16,8 +16,12 @@ pipeline {
                 bat 'docker build -t cap/dashboard .'
             }
         }
-        
-     
+  
+        stage('Run Image') {
+            steps {
+                bat 'docker run -p 8051:8051 cap/dashboard'
+            }
+        }
 
         stage('Testing') {
             steps {
