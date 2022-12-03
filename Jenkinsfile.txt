@@ -20,9 +20,12 @@ pipeline {
 
         stage('Testing') {
             steps {
-            
-                bat 'pytest test_sample.py'
-                echo 'Process Complete'
+                 withPythonEnv('python3') {
+                    bat 'pip install pytest'
+                    bat 'pytest test_sample.py'
+                    echo 'Process Complete'
+                }
+                
             } 
         }
     }
